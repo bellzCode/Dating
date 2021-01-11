@@ -33,6 +33,16 @@ namespace API
             {
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
+            
+            services.AddCors();
+            // services.AddCors(options =>
+            //         {
+            //             options.AddDefaultPolicy(
+            //                 builder =>
+            //                 {
+            //                     builder.WithOrigins("http://localhost:4200");
+            //                 });
+            //         });
             services.AddControllers();
         }
 
@@ -48,6 +58,15 @@ namespace API
 
             app.UseRouting();
 
+            // app.UseCors();
+
+            app.UseCors(x => x
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                // .WithOrigins("http://localhost:4200")
+                .WithOrigins("https://localhost:4200")
+                );
+    
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
